@@ -10,7 +10,6 @@ return {
   layout_width = "fill",
   layout_height = "fill",
   orientation = "vertical",
-  padding = "8dp",
   {
     TabLayout,
     id = "sub_tab_layout",

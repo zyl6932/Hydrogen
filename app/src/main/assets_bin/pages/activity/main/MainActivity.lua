@@ -264,43 +264,70 @@ function MainActivity:setupSharedElementTransition(transaction, fragment, fragme
   end)
 end
 
+-- 获取设备屏幕圆角半径
+function MainActivity:getScreenCornerRadius()
+  -- 优先读取系统资源
+  local res = activity.getResources()
+  local id = res.getIdentifier("rounded_corner_radius", "dimen", "android")
+  if id ~= 0 then
+    local r = res.getDimensionPixelSize(id)
+    if r > 0 then return r end
+  end
+  -- 现代手机屏幕圆角通常在 24dp 左右
+  return dp2px(24)
+end
+
 -- 设置进入转场
 function MainActivity:setupEnterTransition(fragment, container, sharedView)
-  -- 容器变换
+  local screenRadius = self:getScreenCornerRadius()
+  local screenCornerShape = ShapeAppearanceModel.builder()
+    .setAllCornerSizes(screenRadius)
+    .build()
+
+  -- 容器变换（卡片→页面）
   local containerTransform = MaterialContainerTransform(activity, true)
-  .setStartView(sharedView)
-  .setPathMotion(MaterialArcMotion())
-  .setScrimColor(0x99000000)
+    .setStartView(sharedView)
+    .setEndView(container)
+    .setPathMotion(MaterialArcMotion())
+    .setScrimColor(0x99000000)
+    .setEndShapeAppearanceModel(screenCornerShape)
 
 
   local axisForward = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-  .addTarget(container)
+    .addTarget(container)
 
   local forward = TransitionSet()
-  .setOrdering(TransitionSet.ORDERING_TOGETHER)
-  .addTransition(containerTransform)
-  .addTransition(axisForward)
+    .setOrdering(TransitionSet.ORDERING_TOGETHER)
+    .addTransition(containerTransform)
+    .addTransition(axisForward)
 
   fragment.setEnterTransition(forward)
 end
 
 -- 设置返回转场
 function MainActivity:setupReturnTransition(fragment, container, sharedView)
+  local screenRadius = self:getScreenCornerRadius()
+  local screenCornerShape = ShapeAppearanceModel.builder()
+    .setAllCornerSizes(screenRadius)
+    .build()
+
+  -- 容器变换（页面→卡片，反向）
   local containerBackward = MaterialContainerTransform(activity, false)
-  .setStartView(container)
-  .setEndView(sharedView)
-  .setPathMotion(MaterialArcMotion())
-  .setScrimColor(0x99000000)
-  .addTarget(sharedView)
+    .setStartView(container)
+    .setEndView(sharedView)
+    .setPathMotion(MaterialArcMotion())
+    .setScrimColor(0x99000000)
+    .setStartShapeAppearanceModel(screenCornerShape)
+    .addTarget(sharedView)
 
   local axisBackward = MaterialSharedAxis(MaterialSharedAxis.Z, false)
-  .addTarget(container)
+    .addTarget(container)
 
   local backward = TransitionSet()
-  .setOrdering(TransitionSet.ORDERING_TOGETHER)
-  .addTransition(containerBackward)
-  .addTransition(axisBackward)
-  
+    .setOrdering(TransitionSet.ORDERING_TOGETHER)
+    .addTransition(containerBackward)
+    .addTransition(axisBackward)
+
   fragment.setExitTransition(backward)
   fragment.setReturnTransition(backward)
 end

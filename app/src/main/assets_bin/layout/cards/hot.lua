@@ -32,22 +32,12 @@ return {
       orientation = "horizontal",
       layout_width = "match_parent",
       layout_height = "wrap_content",
-      padding = "16dp",
-      {
-        MaterialTextView,
-        id = "rank",
-        text = "1",
-        textSize  = AppTextStyle.title.size,
-        typeface  = AppTextStyle.title.font,
-        layout_width = "32dp",
-        gravity = "center",
-      },
+      padding = "12dp",
       {
         LinearLayoutCompat,
         layout_width = "0dp",
         layout_weight = 1,
         orientation = "vertical",
-        layout_marginStart = "8dp",
         {
           MaterialTextView,
           id = "title",
@@ -55,8 +45,6 @@ return {
           textSize  = AppTextStyle.title.size,
           typeface  = AppTextStyle.title.font,
           textColor = AppTextStyle.title.color,
-          maxLines = 2,
-          ellipsize = "end",
         },
         {
           LinearLayoutCompat,

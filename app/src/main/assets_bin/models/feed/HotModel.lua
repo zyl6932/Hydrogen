@@ -52,7 +52,6 @@ function HotModel:createAdapter()
       return SimpleRecyclerAdapter.inflate(Layouts.cards.hot)
     end,
     onBind = function(views, item, position, holder)
-      views.rank.text = tostring(item.rank)
       views.title.text = item.title or ""
       views.heat_row.Visibility = (closeHeat or not item.heat) and 8 or 0
 

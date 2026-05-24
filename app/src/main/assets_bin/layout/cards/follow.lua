@@ -23,9 +23,9 @@ return {
   {
     MaterialCardView,
     id = "card",
-    layout_margin = "8dp",
-    layout_marginLeft = "16dp",
-    layout_marginRight = "16dp",
+    layout_margin = "12dp",
+    layout_marginTop = "6dp",
+    layout_marginBottom = "6dp",
     layout_width = "match_parent",
     layout_height = "wrap_content",
     clickable = true,

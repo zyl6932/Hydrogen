@@ -10,7 +10,6 @@ return {
   LinearLayoutCompat,
   layout_width = "fill",
   layout_height = "fill",
-  padding = "8dp",
   {
     CustomSwipeRefresh,
     id = "swipe_refresh",

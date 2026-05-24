@@ -68,7 +68,7 @@ return {
         id = "question_title",
         layout_width = "match_parent",
         layout_height = "wrap_content",
-        textSize = AppTextStyle.headline.size,
+        textSize = sp2px(18),
         textColor = AppTextStyle.headline.color,
         typeface = AppTextStyle.headline.font,
         layout_marginBottom = "8dp",
